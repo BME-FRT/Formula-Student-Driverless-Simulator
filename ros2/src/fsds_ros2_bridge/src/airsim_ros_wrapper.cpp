@@ -315,7 +315,7 @@ rclcpp::Time AirsimROSWrapper::make_ts(uint64_t unreal_ts) const
 {
    // unreal timestamp is a unix nanosecond timestamp just like ros.
    // We can do direct translation as long as ros is not running in simulated time mode.
-   return rclcpp::Time(unreal_ts, *clock_);
+   return rclcpp::Time(unreal_ts, clock_->get_clock_type());
 }
 
 // todo add reset by vehicle_name API to airlib
