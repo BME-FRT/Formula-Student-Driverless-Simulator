@@ -222,6 +222,7 @@ private:
     std::string track_name_; // rosparam obtained from launch file
     bool competition_mode_;
     rclcpp::Time go_timestamp_;
+    
 
     std::string host_ip_;
     msr::airlib::CarRpcLibClient airsim_client_;
@@ -254,6 +255,9 @@ private:
     rclcpp::TimerBase::SharedPtr statictf_timer_;
 	rclcpp::TimerBase::SharedPtr extra_info_timer_;
 	rclcpp::TimerBase::SharedPtr clock_timer_;
+
+    // Fix time source for ROS
+    rclcpp::Clock::SharedPtr clock_;
 
     std::vector<std::shared_ptr<rclcpp::Publisher<sensor_msgs::msg::PointCloud2>>> lidar_pub_vec_;
 

@@ -159,7 +159,7 @@ void AirsimROSWrapper::initialize_ros()
 		extra_info_timer_ = nh_->create_wall_timer(dseconds{1}, std::bind(&AirsimROSWrapper::extra_info_cb, this));
     }
     clock_timer_ = nh_->create_wall_timer(dseconds{0.01}, std::bind(&AirsimROSWrapper::clock_timer_cb, this));
-
+    clock_ = std::make_shared<rclcpp::Clock>(RCL_SYSTEM_TIME);
     if(enabled_sensors.gps){
         gps_update_timer_ = nh_->create_wall_timer(dseconds{update_gps_every_n_sec}, std::bind(&AirsimROSWrapper::gps_timer_cb, this));
     }
@@ -315,7 +315,7 @@ rclcpp::Time AirsimROSWrapper::make_ts(uint64_t unreal_ts) const
 {
    // unreal timestamp is a unix nanosecond timestamp just like ros.
    // We can do direct translation as long as ros is not running in simulated time mode.
-   return rclcpp::Time(unreal_ts);
+   return rclcpp::Time(unreal_ts, *clock_);
 }
 
 // todo add reset by vehicle_name API to airlib
